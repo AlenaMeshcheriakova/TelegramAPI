@@ -7,22 +7,12 @@ class Settings(BaseSettings):
 
     JWT_SECRET: str
     JWT_LIFETIME: int
-    SMTP_PASSWORD: str
-    SMTP_USER_FROM: str
 
     GRPC_HOST: str
     GRPC_PORT: int
 
     GRPC_AUTH_HOST: str
     GRPC_AUTH_PORT: int
-
-    @property
-    def SMTP_PASSWORD(self) -> str:
-        return self.SMTP_PASSWORD
-
-    @property
-    def SMTP_USER_FROM(self) -> str:
-        return str(self.SMTP_USER_FROM)
 
     @property
     def JWT_PASSWORD(self) -> str:
