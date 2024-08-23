@@ -1,0 +1,8 @@
+/tests/log/
+/.env
+/cfg/development/
+/cfg/production/
+/cfg/testing/
+/.venv/
+/log/common.log
+/log/
