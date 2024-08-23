@@ -26,31 +26,17 @@ class MockUserService(user_service_pb2_grpc.UserServiceGRPCServicer):
         user1 = user_service_pb2.UserCreateFullDTOResponse(
             id=user1_id,
             user_name=DataPreparation.TEST_USER_NAME,
-            telegram_user_id=DataPreparation.TEST_TELEGRAM_USER_ID,
             training_length=10,
             created_at=Timestamp(seconds=int(datetime.utcnow().timestamp())),
-            updated_at=Timestamp(seconds=int(datetime.utcnow().timestamp())),
-            password=DataPreparation.TEST_PASS,
-            hashed_password=DataPreparation.TEST_PASS,
-            email=DataPreparation.TEST_USER_EMAIL,
-            is_active=True,
-            is_superuser=False,
-            is_verified=True
+            updated_at=Timestamp(seconds=int(datetime.utcnow().timestamp()))
         )
 
         user2 = user_service_pb2.UserCreateFullDTOResponse(
             id=user2_id,
             user_name=DataPreparation.TEST_USER_NAME_2,
-            telegram_user_id=DataPreparation.TEST_TELEGRAM_USER_ID_2,
             training_length=10,
             created_at=Timestamp(seconds=int(datetime.utcnow().timestamp())),
-            updated_at=Timestamp(seconds=int(datetime.utcnow().timestamp())),
-            password=DataPreparation.TEST_PASS_2,
-            hashed_password=DataPreparation.TEST_PASS_2,
-            email=DataPreparation.TEST_USER_EMAIL_2,
-            is_active=True,
-            is_superuser=False,
-            is_verified=True
+            updated_at=Timestamp(seconds=int(datetime.utcnow().timestamp()))
         )
 
         # Populate the dictionaries
@@ -88,16 +74,9 @@ class MockUserService(user_service_pb2_grpc.UserServiceGRPCServicer):
             updated_user = user_service_pb2.UserCreateFullDTOResponse(
                 id=user.id,
                 user_name=user.user_name,
-                telegram_user_id=user.telegram_user_id,
                 training_length=request.training_length,
                 created_at=user.created_at,
-                updated_at=user.updated_at,
-                password=user.password,
-                hashed_password=user.hashed_password,
-                email=user.email,
-                is_active=user.is_active,
-                is_superuser=user.is_superuser,
-                is_verified=user.is_verified
+                updated_at=user.updated_at
             )
             self.users[user_id] = updated_user
             return empty_pb2.Empty()
@@ -112,16 +91,9 @@ class MockUserService(user_service_pb2_grpc.UserServiceGRPCServicer):
         user = user_service_pb2.UserCreateFullDTOResponse(
             id=user_id,
             user_name=request.user_name,
-            telegram_user_id=request.telegram_user_id,
             training_length=request.training_length,
             created_at=Timestamp(seconds=int(datetime.utcnow().timestamp())),
-            updated_at=Timestamp(seconds=int(datetime.utcnow().timestamp())),
-            password=request.hashed_password,
-            hashed_password=request.hashed_password,
-            email=request.email,
-            is_active=True,
-            is_superuser=False,
-            is_verified=True
+            updated_at=Timestamp(seconds=int(datetime.utcnow().timestamp()))
         )
         self.users[user_id] = user
         self.user_ids[request.user_name] = user_id
@@ -132,16 +104,9 @@ class MockUserService(user_service_pb2_grpc.UserServiceGRPCServicer):
         user = user_service_pb2.UserCreateFullDTOResponse(
             id=user_id,
             user_name=request.name,
-            telegram_user_id=request.telegram_id,
             training_length=request.training_length,
             created_at=Timestamp(seconds=int(datetime.utcnow().timestamp())),
-            updated_at=Timestamp(seconds=int(datetime.utcnow().timestamp())),
-            password=request.password,
-            hashed_password=request.password,
-            email=request.email,
-            is_active=True,
-            is_superuser=False,
-            is_verified=True
+            updated_at=Timestamp(seconds=int(datetime.utcnow().timestamp()))
         )
         self.users[user_id] = user
         self.user_ids[request.name] = user_id
