@@ -6,3 +6,5 @@
 /.venv/
 /log/common.log
 /log/
+*.pyc
+__pycache__/
