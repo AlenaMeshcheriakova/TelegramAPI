@@ -84,7 +84,6 @@ class TestUserService:
             name="new_user",
             email="new_user@example.com",
             password="password123",
-            telegram_id="telegram_456",
             training_length=10
         )
 
