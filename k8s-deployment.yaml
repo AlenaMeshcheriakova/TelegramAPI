@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-service-deployment
+  labels:
+    app: api-service-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-service-app
+  template:
+    metadata:
+      labels:
+        app: api-service-app
+    spec:
+      containers:
+      - name: api-service-container
+        image: europe-central2-docker.pkg.dev/telegrambot-433510/telegram-docker-repo/api-service-image:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MODE
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secrets
+              key: MODE
+        - name: JWT_LIFETIME
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secrets
+              key: JWT_LIFETIME
+        - name: GRPC_HOST
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secrets
+              key: GRPC_HOST
+        - name: GRPC_PORT
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secrets
+              key: GRPC_PORT
+        - name: GRPC_AUTH_HOST
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secrets
+              key: GRPC_AUTH_HOST
+        - name: GRPC_AUTH_PORT
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secrets
+              key: GRPC_AUTH_PORT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+spec:
+  selector:
+    app: api-service-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
