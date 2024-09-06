@@ -7,13 +7,13 @@ from cfg.сonfig import settings
 from src.dto.schema import LevelDTO
 from src.grpc.level_service import level_service_pb2
 from src.grpc.level_service.client_level_manager import GRPCClientLevelManager
-from src.log.logger import log_decorator, CustomLogger
+from src.log.logger import log_decorator, logger
 
 class LevelService:
     server_address = settings.get_GRPC_conn
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def create_levels() -> None:
         with GRPCClientLevelManager(LevelService.server_address) as level_manager:
             stub = level_manager.get_stub()
@@ -22,7 +22,7 @@ class LevelService:
             return response
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def create_level(lang_level: str) -> None:
         with GRPCClientLevelManager(LevelService.server_address) as level_manager:
             stub = level_manager.get_stub()
@@ -33,7 +33,7 @@ class LevelService:
             return None
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def get_levels() -> List[LevelDTO]:
         with GRPCClientLevelManager(LevelService.server_address) as level_manager:
             stub = level_manager.get_stub()
@@ -51,7 +51,7 @@ class LevelService:
             return levels
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def get_level_id_by_name(level_enum: str) -> UUID:
         with GRPCClientLevelManager(LevelService.server_address) as level_manager:
             stub = level_manager.get_stub()
@@ -62,7 +62,7 @@ class LevelService:
             return uuid.UUID(response.id)
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def get_level_by_id(level_id: UUID) -> LevelDTO:
         with GRPCClientLevelManager(LevelService.server_address) as level_manager:
             stub = level_manager.get_stub()
@@ -76,7 +76,7 @@ class LevelService:
             return level_dto
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def update_level(level_id: UUID, updated_level_name: str) -> None:
         with GRPCClientLevelManager(LevelService.server_address) as level_manager:
             stub = level_manager.get_stub()
@@ -88,7 +88,7 @@ class LevelService:
             return response
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def delete_level(level_id: UUID) -> None:
         with GRPCClientLevelManager(LevelService.server_address) as level_manager:
             stub = level_manager.get_stub()

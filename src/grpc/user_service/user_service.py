@@ -5,14 +5,14 @@ from src.dto.schema import  UserCreateFullDTO
 from src.grpc.mapping_helper import convert_proto_to_pydantic
 from src.grpc.user_service import user_service_pb2
 from src.grpc.user_service.client_user_manager import GRPCClientUserManager
-from src.log.logger import log_decorator, CustomLogger
+from src.log.logger import log_decorator, logger
 
 class UserService:
 
     server_address = settings.get_GRPC_conn
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def get_user_by_id(user_id: uuid.UUID) -> UserCreateFullDTO:
         with GRPCClientUserManager(UserService.server_address) as user_manager:
             stub = user_manager.get_stub()
@@ -24,7 +24,7 @@ class UserService:
             return dto
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def get_user_by_name(user_name: str) -> UserCreateFullDTO:
         with GRPCClientUserManager(UserService.server_address) as user_manager:
             stub = user_manager.get_stub()
@@ -36,7 +36,7 @@ class UserService:
             return dto
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def get_user_id_by_name(user_name: str) -> uuid.UUID:
         with GRPCClientUserManager(UserService.server_address) as user_manager:
             stub = user_manager.get_stub()
@@ -47,7 +47,7 @@ class UserService:
             return response.user_id
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def update_user_training_length(user_name: str, new_training_length: int) -> None:
         with GRPCClientUserManager(UserService.server_address) as user_manager:
             stub = user_manager.get_stub()
@@ -58,7 +58,7 @@ class UserService:
             stub.update_user_training_length(request)
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def is_user_created(user_name: str) -> bool:
         with GRPCClientUserManager(UserService.server_address) as user_manager:
             stub = user_manager.get_stub()

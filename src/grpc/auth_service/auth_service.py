@@ -4,14 +4,14 @@ from src.dto.schema import UserValidation, JWT_tocken, UserResponse, RegisterReq
 from src.grpc.auth_service import auth_service_pb2
 from src.grpc.auth_service.client_auth_manager import GRPCClientAuthManager
 from src.grpc.mapping_helper import convert_proto_to_pydantic
-from src.log.logger import log_decorator, CustomLogger
+from src.log.logger import log_decorator, logger
 
 class AuthService:
 
     server_address = settings.get_AUTH_GRPC_conn
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def validate_token(token: str) -> UserValidation:
         with GRPCClientAuthManager(AuthService.server_address) as auth_manager:
             stub = auth_manager.get_stub()
@@ -23,7 +23,7 @@ class AuthService:
             return validated_user
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def login(username: str, password: str, email: str, telegram_user_id: str ) -> JWT_tocken:
         with GRPCClientAuthManager(AuthService.server_address) as auth_manager:
             stub = auth_manager.get_stub()
@@ -41,7 +41,7 @@ class AuthService:
             return token
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def register(register_request: RegisterRequest) -> UserResponse:
         with GRPCClientAuthManager(AuthService.server_address) as auth_manager:
             stub = auth_manager.get_stub()

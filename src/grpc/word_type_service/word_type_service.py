@@ -3,7 +3,7 @@ import uuid
 from cfg.сonfig import settings
 from src.grpc.word_type_service import word_type_service_pb2
 from src.grpc.word_type_service.client_word_type_manager import GRPCClientWordTypeManager
-from src.log.logger import log_decorator, CustomLogger
+from src.log.logger import log_decorator, logger
 
 
 class WordTypeService:
@@ -11,7 +11,7 @@ class WordTypeService:
     server_address = settings.get_GRPC_conn
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def get_word_type_id(wordType: str) -> uuid.UUID:
         """
         Get word type ID by wordType
@@ -26,7 +26,7 @@ class WordTypeService:
             return word_type_uuid
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def create_word_type(wordType: str) -> uuid.UUID:
         """
         Create a new word type and return its UUID.
@@ -39,7 +39,7 @@ class WordTypeService:
             return word_type_uuid
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def update_word_type(word_type_id: uuid.UUID, new_word_type: str) -> None:
         """
         Update the word type by its ID.
@@ -54,7 +54,7 @@ class WordTypeService:
             return None
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def delete_word_type(word_type_id: uuid.UUID) -> None:
         """
         Delete the word type by its ID and return success status.

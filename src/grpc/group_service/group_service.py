@@ -5,7 +5,7 @@ from cfg.сonfig import settings
 from src.dto.schema import GroupAddDTO
 from src.grpc.group_service import group_service_pb2
 from src.grpc.group_service.client_group_manager import GRPCClientGroupManager
-from src.log.logger import log_decorator, CustomLogger
+from src.log.logger import log_decorator, logger
 
 
 class GroupService:
@@ -13,7 +13,7 @@ class GroupService:
     server_address = settings.get_GRPC_conn
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def get_groups_name_by_user_name(user_name: str) -> List[str]:
         with GRPCClientGroupManager(GroupService.server_address) as group_manager:
             stub = group_manager.get_stub()
@@ -24,7 +24,7 @@ class GroupService:
 
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def create_group(new_group: GroupAddDTO) -> None:
         with GRPCClientGroupManager(GroupService.server_address) as group_manager:
             stub = group_manager.get_stub()
@@ -37,7 +37,7 @@ class GroupService:
             stub.create_group(request)
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def get_group_id_by_group_name(group_name: str) -> UUID:
         with GRPCClientGroupManager(GroupService.server_address) as group_manager:
             stub = group_manager.get_stub()
@@ -47,7 +47,7 @@ class GroupService:
             return result_uuid
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def is_group_created(group_name: str) -> bool:
         with GRPCClientGroupManager(GroupService.server_address) as group_manager:
             stub = group_manager.get_stub()
@@ -57,7 +57,7 @@ class GroupService:
             return isGroupCreated
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def update_group(group_id: UUID, new_group_name: str) -> None:
         with GRPCClientGroupManager(GroupService.server_address) as group_manager:
             stub = group_manager.get_stub()
@@ -68,7 +68,7 @@ class GroupService:
             stub.update_group(request)
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def delete_group(group_id: UUID) -> None:
         with GRPCClientGroupManager(GroupService.server_address) as group_manager:
             stub = group_manager.get_stub()

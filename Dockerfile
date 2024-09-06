@@ -70,4 +70,4 @@ WORKDIR /app
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "alembic upgrade head && python src/api/main_service.py"]
+CMD ["sh", "-c", "python main_service.py"]

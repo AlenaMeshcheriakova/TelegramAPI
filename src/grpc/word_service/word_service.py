@@ -6,7 +6,7 @@ from src.dto.schema import WordGetDTO, WordAddDTO
 from src.grpc.mapping_helper import pydantic_to_protobuf, convert_proto_to_pydantic
 from src.grpc.word_service import word_service_pb2
 from src.grpc.word_service.client_word_manager import GRPCClientWordManager
-from src.log.logger import CustomLogger, log_decorator
+from src.log.logger import logger, log_decorator
 from src.model.level_enum import LevelEnum
 from src.model.word_type_enum import WordTypeEnum
 
@@ -15,7 +15,7 @@ class WordService:
     server_address = settings.get_GRPC_conn
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def get_words_by_user(user_id: uuid.UUID, training_length: int = 10) -> List[WordGetDTO]:
         with GRPCClientWordManager(WordService.server_address) as word_manager:
             stub = word_manager.get_stub()
@@ -32,7 +32,7 @@ class WordService:
             return res_word_list
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def add_new_word_from_dto(word: WordAddDTO):
         with GRPCClientWordManager(WordService.server_address) as word_manager:
             stub = word_manager.get_stub()
@@ -44,7 +44,7 @@ class WordService:
 
 
     @staticmethod
-    @log_decorator(my_logger=CustomLogger())
+    @log_decorator(my_logger=logger)
     def add_new_word(user_name: str, german_word: str, english_word: str, russian_word: str,
                      amount_already_know: int = 0, amount_back_to_learning: int = 0,
                      group_word_name: str = "CUSTOM_GROUP", level: LevelEnum = LevelEnum.a1,
